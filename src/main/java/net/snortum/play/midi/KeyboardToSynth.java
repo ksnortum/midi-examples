@@ -13,15 +13,23 @@ import javax.sound.midi.Transmitter;
  * device names for each of these.
  * 
  * @author Knute Snortum
- * @version 2017/06/16
+ * @version 2017/06/17
  */
 public class KeyboardToSynth {
 	
-	// Get these names from the MidiDeviceDisplay program, or leave empty for default
-	private static final String TRANS_DEV_NAME = ""; // "USB Uno MIDI Interface";
-	private static final String SYNTH_DEV_NAME = ""; // "Microsoft MIDI Mapper"; 
+	/**
+	 * Name values can have the class name, (see {@link MidiSystem}), the device
+	 * name or both. Use a pound sign (#) to separate the class and device name.
+	 * Get device names from the {@link MidiDeviceDisplay} program, or leave
+	 * empty for default.<p>
+	 * 
+	 * {@code javax.sound.midi.Transmitter#USB Uno MIDI Interface}<br>
+	 * {@code javax.sound.midi.Synthesizer#Microsoft MIDI Mapper}<br>
+	 */
+	private static final String TRANS_DEV_NAME = "javax.sound.midi.Transmitter#USB Uno MIDI Interface";
+	private static final String SYNTH_DEV_NAME = "javax.sound.midi.Synthesizer#Microsoft MIDI Mapper"; 
 
-	// See https://docs.oracle.com/javase/8/docs/api/javax/sound/midi/MidiSystem.html 
+	/** See {@link MidiSystem} for other classes */ 
 	private static final String TRANS_PROP_KEY = "javax.sound.midi.Transmitter";
 	private static final String SYNTH_PROP_KEY = "javax.sound.midi.Synthesizer";
 	
@@ -52,10 +60,11 @@ public class KeyboardToSynth {
 		}
 		
 		// You get your receiver from the synthesizer, then set it in
-		// your transmitter.
+		// your transmitter.  Optionally, you can create an implementation
+		// of Receiver to display the messages before they're sent.
 		try {
 			Receiver receiver = synth.getReceiver();
-			DisplayReceiver displayReceiver = new DisplayReceiver(receiver);
+			DisplayReceiver displayReceiver = new DisplayReceiver(receiver); // optional
 			trans.setReceiver(displayReceiver); // or just "receiver"
 			
 			// You should be able to play on your musical keyboard (transmitter)

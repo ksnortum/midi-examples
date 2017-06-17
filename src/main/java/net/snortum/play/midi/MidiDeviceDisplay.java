@@ -7,10 +7,10 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
 
 /**
- * Use this program to discover MIDI devices out your system.
+ * Use this program to discover MIDI devices on your system.
  * 
  * @author Knute Snortum
- * @version 2017/06/16
+ * @version 2017/06/17
  */
 public class MidiDeviceDisplay {
 
@@ -19,25 +19,26 @@ public class MidiDeviceDisplay {
 	}
 
 	private void run() {
-		MidiDevice.Info[] devices = MidiSystem.getMidiDeviceInfo();
-		if (devices.length == 0) {
-		    System.out.println("No MIDI devices found");
-		    return;
-		} 
+		MidiDevice.Info[] deviceInfo = MidiSystem.getMidiDeviceInfo();
+		if (deviceInfo.length == 0) {
+			System.out.println("No MIDI devices found");
+			return;
+		}
 
-		for (MidiDevice.Info info : devices) {
+		for (MidiDevice.Info info : deviceInfo) {
 			System.out.println("**********************");
 			System.out.println("Device name: " + info.getName());
-		    System.out.println("Description: " + info.getDescription());
-		    System.out.println("Vendor: " + info.getVendor());
-		    System.out.println("Version: " + info.getVersion());
-		    
-	        try {
-	        	MidiDevice device = MidiSystem.getMidiDevice(info);
-	        	printDeviceType(device);
-	        	
-				System.out.println("Maximum receivers: " + maxToString(device.getMaxReceivers()));
-				System.out.println("Maximum transmitters: " + maxToString(device.getMaxTransmitters()));
+			System.out.println("Description: " + info.getDescription());
+			System.out.println("Vendor: " + info.getVendor());
+			System.out.println("Version: " + info.getVersion());
+
+			try {
+				MidiDevice device = MidiSystem.getMidiDevice(info);
+				printDeviceType(device);
+				System.out.println("Maximum receivers: "
+						+ maxToString(device.getMaxReceivers()));
+				System.out.println("Maximum transmitters: "
+						+ maxToString(device.getMaxTransmitters()));
 			} catch (MidiUnavailableException e) {
 				System.out.println("Can't get MIDI device");
 				e.printStackTrace();
@@ -47,19 +48,19 @@ public class MidiDeviceDisplay {
 
 	private void printDeviceType(MidiDevice device) {
 		if (device instanceof Sequencer) {
-    		System.out.println("This is a sequencer");
-    	} else if (device instanceof Synthesizer) {
-    		System.out.println("This is a synthesizer");
-    	} else {
-    		System.out.print("This is a MIDI port ");
-    		if (device.getMaxReceivers() != 0) {
-    			System.out.println("IN ");
-    		} else if (device.getMaxTransmitters() != 0) {
-    			System.out.println("OUT ");
-    		} else {
-    			System.out.println();
-    		}
-    	}
+			System.out.println("This is a sequencer");
+		} else if (device instanceof Synthesizer) {
+			System.out.println("This is a synthesizer");
+		} else {
+			System.out.print("This is a MIDI port ");
+			if (device.getMaxReceivers() != 0) {
+				System.out.println("IN ");
+			} else if (device.getMaxTransmitters() != 0) {
+				System.out.println("OUT ");
+			} else {
+				System.out.println();
+			}
+		}
 	}
 
 	private String maxToString(int max) {
