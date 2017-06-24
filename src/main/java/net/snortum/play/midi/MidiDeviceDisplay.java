@@ -54,12 +54,12 @@ public class MidiDeviceDisplay {
 		} else {
 			System.out.print("This is a MIDI port ");
 			if (device.getMaxReceivers() != 0) {
-				System.out.println("IN ");
-			} else if (device.getMaxTransmitters() != 0) {
-				System.out.println("OUT ");
-			} else {
-				System.out.println();
-			}
+				System.out.print("IN ");
+			} 
+			if (device.getMaxTransmitters() != 0) {
+				System.out.print("OUT ");
+			} 
+			System.out.println();
 		}
 	}
 
