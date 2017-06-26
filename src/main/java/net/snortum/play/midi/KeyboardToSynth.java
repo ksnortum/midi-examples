@@ -202,6 +202,7 @@ public class KeyboardToSynth {
 			
 			byte[] bytes = message.getMessage();
 			
+			// Zero velocity
 			if ( bytes[2] == 0 ) {
 				System.out.print(" = Note off");
 			} else {
@@ -417,8 +418,9 @@ public class KeyboardToSynth {
 			return b & 0xff;
 		}
 		
+		// Two 7-bit bytes
 		private int bytesToInt(byte msb, byte lsb) {
-			return byteToInt(msb) * 256 + byteToInt(lsb);
+			return byteToInt(msb) * 128 + byteToInt(lsb);
 		}
 		
 		private int midiChannelToInt(MidiMessage message) {
