@@ -45,6 +45,8 @@ public class PlaySequencer {
 		} catch (MidiUnavailableException e1) {
 			e1.printStackTrace();
 		}
+		
+		sequencer.setTempoInBPM(144.0f);
 
 		// Input MIDI data
 		try {
@@ -69,7 +71,7 @@ public class PlaySequencer {
 
 	// Create a sequence and set all MIDI events
 	private Sequence getMidiInputData() {
-		int ticksPerQuarterNote = 8;
+		int ticksPerQuarterNote = 4;
 		Sequence seq;
 		try {
 			seq = new Sequence(Sequence.PPQ, ticksPerQuarterNote);
