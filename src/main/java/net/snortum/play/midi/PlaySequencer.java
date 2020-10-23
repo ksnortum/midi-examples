@@ -44,6 +44,7 @@ public class PlaySequencer {
 			sequencer.open();
 		} catch (MidiUnavailableException e1) {
 			e1.printStackTrace();
+			return;
 		}
 		
 		sequencer.setTempoInBPM(144.0f);
@@ -53,6 +54,7 @@ public class PlaySequencer {
 			sequencer.setSequence(getMidiInputData());
 		} catch (InvalidMidiDataException e1) {
 			e1.printStackTrace();
+			return;
 		}
 
 		// Play sequence
@@ -64,7 +66,7 @@ public class PlaySequencer {
 			sleep(1000);
 		}
 
-		// Sleep or last note it clipped
+		// Sleep or last note is clipped
 		sleep(200);
 		sequencer.close();
 	}
